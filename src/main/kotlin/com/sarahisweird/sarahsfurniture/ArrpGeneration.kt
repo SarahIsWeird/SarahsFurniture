@@ -3,6 +3,7 @@ package com.sarahisweird.sarahsfurniture
 import com.sarahisweird.sarahsfurniture.SarahsFurniture.MOD_ID
 import com.sarahisweird.sarahsfurniture.util.arrp.addBlockState
 import com.sarahisweird.sarahsfurniture.util.arrp.addLang
+import com.sarahisweird.sarahsfurniture.util.arrp.addLootTable
 import com.sarahisweird.sarahsfurniture.util.arrp.addModel
 import com.sarahisweird.sarahsfurniture.util.arrp.model.JTexturesContext
 import com.sarahisweird.sarahsfurniture.util.toIdentifier
@@ -20,6 +21,7 @@ class ArrpGeneration : RRPPreGenEntrypoint {
     override fun pregen() {
         registerBlocks()
         registerLangEntries()
+        registerLootTables()
     }
 
     private fun registerBlocks() {
@@ -32,6 +34,10 @@ class ArrpGeneration : RRPPreGenEntrypoint {
                 block(Identifier(MOD_ID, "${name}_armchair"), "$displayName Armchair")
             }
         }
+    }
+
+    private fun registerLootTables() {
+        VariantUtil.WOOLS.registerDefaultLootTables("armchair")
     }
 
     private fun List<Variant>.registerHorizontalFurnitureSingleTexture(blockName: String) =
@@ -97,6 +103,22 @@ class ArrpGeneration : RRPPreGenEntrypoint {
             addMultipart {
                 addModel(identifier) { y(270) }
                 whenCondition("facing", "west")
+            }
+        }
+
+    private fun List<Variant>.registerDefaultLootTables(blockName: String) =
+        forEach { variant ->
+            RESOURCE_PACK.addLootTable(Identifier(MOD_ID, "blocks/${variant.name}_$blockName"), "minecraft:block") {
+                pool {
+                    rolls(1)
+
+                    entry {
+                        type("minecraft:item")
+                        name("$MOD_ID:${variant.name}_$blockName")
+                    }
+
+                    condition("minecraft:survives_explosion")
+                }
             }
         }
 }

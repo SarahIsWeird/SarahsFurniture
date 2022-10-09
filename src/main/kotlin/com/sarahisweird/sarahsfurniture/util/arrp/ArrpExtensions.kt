@@ -4,6 +4,8 @@ import com.sarahisweird.sarahsfurniture.util.arrp.blockstate.JStateContext
 import com.sarahisweird.sarahsfurniture.util.arrp.blockstate.arrpState
 import com.sarahisweird.sarahsfurniture.util.arrp.lang.JLangContext
 import com.sarahisweird.sarahsfurniture.util.arrp.lang.arrpLang
+import com.sarahisweird.sarahsfurniture.util.arrp.loot.JLootTableContext
+import com.sarahisweird.sarahsfurniture.util.arrp.loot.arrpLootTable
 import com.sarahisweird.sarahsfurniture.util.arrp.model.JModelContext
 import com.sarahisweird.sarahsfurniture.util.arrp.model.arrpModel
 import net.devtech.arrp.api.RuntimeResourcePack
@@ -17,3 +19,6 @@ fun RuntimeResourcePack.addBlockState(identifier: Identifier, builder: JStateCon
 
 fun RuntimeResourcePack.addLang(identifier: Identifier, builder: JLangContext.() -> Unit): ByteArray =
     addLang(identifier, arrpLang(builder))
+
+fun RuntimeResourcePack.addLootTable(identifier: Identifier, type: String, builder: JLootTableContext.() -> Unit): ByteArray =
+    addLootTable(identifier, arrpLootTable(type, builder))
