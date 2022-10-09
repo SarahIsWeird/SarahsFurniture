@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "sarahsfurniture:block/armchair",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "sarahsfurniture:block/armchair",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "sarahsfurniture:block/armchair"
+    },
+    "facing=west": {
+      "model": "sarahsfurniture:block/armchair",
+      "y": 90
+    }
+  }
+}
