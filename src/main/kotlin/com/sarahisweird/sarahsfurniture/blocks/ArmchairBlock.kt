@@ -3,11 +3,12 @@ package com.sarahisweird.sarahsfurniture.blocks
 import com.sarahisweird.sarahsfurniture.util.voxelShape
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.block.*
+import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 
-class ArmchairBlock : HorizontalFurnitureBlock(FabricBlockSettings.of(Material.WOOL)) {
+class ArmchairBlock : HorizontalFurnitureBlock(FabricBlockSettings.of(Material.WOOL).strength(0.8f).sounds(BlockSoundGroup.WOOL)) {
     @Suppress("OVERRIDE_DEPRECATION")
     override fun getOutlineShape(state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext): VoxelShape =
         voxelShape {
