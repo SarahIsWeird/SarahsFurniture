@@ -8,7 +8,7 @@ import net.minecraft.state.StateManager
 import net.minecraft.state.property.DirectionProperty
 import net.minecraft.util.math.Direction
 
-open class HorizontalFurnitureBlock(settings: Settings) : Block(settings) {
+open class HorizontalFurnitureBlock protected constructor(settings: Settings) : Block(settings) {
     companion object {
         val FACING: DirectionProperty = HorizontalFacingBlock.FACING
     }

@@ -20,9 +20,23 @@ object VariantUtil {
         "black"
     )
 
-    val WOOLS = COLORS.map(::WoolVariant)
+    val WOOD_TYPES = listOf(
+        "oak",
+        "spruce",
+        "birch",
+        "jungle",
+        "acacia",
+        "dark_oak",
+        "crimson",
+        "warped",
+        "mangrove"
+    )
 
-    val TRANSLATIONS = mapOf(
+    val WOOLS = COLORS.map(::WoolVariant)
+    val WOOD_LOGS = WOOD_TYPES.map(::WoodLogVariant)
+    val WOOD_PLANKS = WOOD_TYPES.map(::WoodPlanksVariant)
+
+    val COLOR_TRANSLATIONS = mapOf(
         "en_us" to listOf(
             "White",
             "Orange",
@@ -40,6 +54,20 @@ object VariantUtil {
             "Green",
             "Red",
             "Black"
+        )
+    )
+
+    val WOOD_TRANSLATIONS = mapOf(
+        "en_us" to listOf(
+            "Oak",
+            "Spruce",
+            "Birch",
+            "Jungle",
+            "Acacia",
+            "Dark Oak",
+            "Crimson",
+            "Warped",
+            "Mangrove"
         )
     )
 }

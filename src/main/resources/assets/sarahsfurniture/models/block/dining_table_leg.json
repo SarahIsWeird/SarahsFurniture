@@ -1,0 +1,22 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"particle": "block/oak_log",
+		"leg": "block/oak_log"
+	},
+	"elements": [
+		{
+			"from": [2, 0, 2],
+			"to": [4, 14, 4],
+			"faces": {
+				"north": {"uv": [0, 2, 2, 16], "texture": "#leg"},
+				"east": {"uv": [2, 2, 4, 16], "texture": "#leg"},
+				"south": {"uv": [4, 2, 6, 16], "texture": "#leg"},
+				"west": {"uv": [6, 2, 8, 16], "texture": "#leg"},
+				"up": {"uv": [0, 0, 2, 2], "texture": "#missing"},
+				"down": {"uv": [0, 14, 2, 16], "texture": "#leg"}
+			}
+		}
+	]
+}

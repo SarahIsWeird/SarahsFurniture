@@ -14,6 +14,9 @@ class BlockInit : BlockRegistryContainer {
     companion object {
         @IterationIgnored
         val ARMCHAIRS = VariantUtil.WOOLS.map { ArmchairBlock() }
+
+        @IterationIgnored
+        val DINING_TABLES = VariantUtil.WOOD_PLANKS.flatMap { VariantUtil.WOOD_LOGS.map { DiningTableBlock() } }
     }
 
     override fun createBlockItem(block: Block, identifier: String) =
@@ -25,6 +28,16 @@ class BlockInit : BlockRegistryContainer {
 
             Registry.register(Registry.BLOCK, blockIdentifier, chair)
             Registry.register(Registry.ITEM, blockIdentifier, BlockItem(chair, FabricItemSettings().group(SarahsFurniture.ITEM_GROUP)))
+        }
+
+        VariantUtil.WOOD_PLANKS.forEachIndexed { plankI, plank ->
+            VariantUtil.WOOD_LOGS.forEachIndexed { logI, log ->
+                val identifier = Identifier(SarahsFurniture.MOD_ID, "${plank.name}_${log.name}_dining_table")
+                val table = DINING_TABLES[plankI * VariantUtil.WOOD_LOGS.size + logI]
+
+                Registry.register(Registry.BLOCK, identifier, table)
+                Registry.register(Registry.ITEM, identifier, BlockItem(table, FabricItemSettings().group(SarahsFurniture.ITEM_GROUP)))
+            }
         }
     }
 }

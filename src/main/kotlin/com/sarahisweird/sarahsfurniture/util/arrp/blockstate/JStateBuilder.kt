@@ -3,6 +3,7 @@ package com.sarahisweird.sarahsfurniture.util.arrp.blockstate
 import net.devtech.arrp.json.blockstate.JMultipart
 import net.devtech.arrp.json.blockstate.JState
 import net.devtech.arrp.json.blockstate.JVariant
+import net.minecraft.util.Identifier
 
 class JStateContext {
     val state = JState()
@@ -14,6 +15,9 @@ class JStateContext {
     fun addMultipart(builder: JMultipartContext.() -> Unit) {
         state.add(arrpMultipart(builder))
     }
+
+    fun addMultipartModel(identifier: Identifier) =
+        addMultipart { addModel(identifier) }
 
     fun addVariant(variant: JVariant) {
         state.add(variant)

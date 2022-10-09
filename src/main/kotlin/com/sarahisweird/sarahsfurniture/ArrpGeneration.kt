@@ -9,6 +9,8 @@ import com.sarahisweird.sarahsfurniture.util.arrp.model.JTexturesContext
 import com.sarahisweird.sarahsfurniture.util.toIdentifier
 import com.sarahisweird.sarahsfurniture.util.variants.Variant
 import com.sarahisweird.sarahsfurniture.util.variants.VariantUtil
+import com.sarahisweird.sarahsfurniture.util.withPathPrefix
+import com.sarahisweird.sarahsfurniture.util.withPathSuffix
 import net.devtech.arrp.api.RRPPreGenEntrypoint
 import net.devtech.arrp.api.RuntimeResourcePack
 import net.minecraft.util.Identifier
@@ -26,18 +28,50 @@ class ArrpGeneration : RRPPreGenEntrypoint {
 
     private fun registerBlocks() {
         VariantUtil.WOOLS.registerHorizontalFurnitureSingleTexture("armchair")
+
+        VariantUtil.WOOD_LOGS.registerTableLegs("dining_table")
+        VariantUtil.WOOD_PLANKS.registerTableSurfaces("dining_table")
+
+        val diningTableIdentifier = Identifier(MOD_ID, "dining_table")
+        val diningTableSurfaceIdentifier = diningTableIdentifier.withPathSuffix("_surface")
+        val diningTableLegIdentifier = diningTableIdentifier.withPathSuffix("_leg")
+
+        for (log in VariantUtil.WOOD_LOGS) {
+            for (planks in VariantUtil.WOOD_PLANKS) {
+                val blockVariant = diningTableIdentifier.withPathPrefix("${planks.name}_${log.name}_")
+                val surfaceVariant = diningTableSurfaceIdentifier.withPathPrefix("${planks.name}_")
+                val legVariant = diningTableLegIdentifier.withPathPrefix("${log.name}_")
+
+                registerTableBlockstates(blockVariant, surfaceVariant, legVariant)
+                registerBlockItem(blockVariant, blockVariant.withPathPrefix("item/"))
+            }
+        }
     }
 
     private fun registerLangEntries() {
         RESOURCE_PACK.addLang("en_us".toIdentifier(MOD_ID)) {
-            VariantUtil.COLORS.zip(VariantUtil.TRANSLATIONS["en_us"]!!).forEach { (name, displayName) ->
+            VariantUtil.COLORS.zip(VariantUtil.COLOR_TRANSLATIONS["en_us"]!!).forEach { (name, displayName) ->
                 block(Identifier(MOD_ID, "${name}_armchair"), "$displayName Armchair")
+            }
+
+            val diningTableIdentifier = Identifier(MOD_ID, "dining_table")
+
+            VariantUtil.WOOD_PLANKS.zip(VariantUtil.WOOD_TRANSLATIONS["en_us"]!!).forEach { (planks, displayName) ->
+                for (log in VariantUtil.WOOD_LOGS) {
+                    val blockVariant = diningTableIdentifier.withPathPrefix("${planks.name}_${log.name}_")
+
+                    block(blockVariant,  "$displayName Dining Table")
+                }
             }
         }
     }
 
     private fun registerLootTables() {
         VariantUtil.WOOLS.registerDefaultLootTables("armchair")
+
+        for (log in VariantUtil.WOOD_LOGS) {
+            VariantUtil.WOOD_PLANKS.registerDefaultLootTables("${log.name}_dining_chair")
+        }
     }
 
     private fun List<Variant>.registerHorizontalFurnitureSingleTexture(blockName: String) =
@@ -59,10 +93,37 @@ class ArrpGeneration : RRPPreGenEntrypoint {
             registerHorizontalFurnitureBlockstates(blockIdentifier)
         }
 
+    private fun List<Variant>.registerTableLegs(blockName: String) =
+        forEach { variant ->
+            val parentIdentifier = Identifier(MOD_ID, "${blockName}_leg")
+            val modelIdentifier = parentIdentifier.withPathPrefix("${variant.name}_")
+
+            registerBlockModel(modelIdentifier, parentIdentifier.withPathPrefix("block/")) {
+                variable("leg", variant.textureName)
+                particle(variant.textureName)
+            }
+        }
+
+    private fun List<Variant>.registerTableSurfaces(blockName: String) =
+        forEach { variant ->
+            val parentIdentifier = Identifier(MOD_ID, "${blockName}_surface")
+            val modelIdentifier = parentIdentifier.withPathPrefix("${variant.name}_")
+
+            registerBlockModel(modelIdentifier, parentIdentifier.withPathPrefix("block/")) {
+                variable("surface", variant.textureName)
+                particle(variant.textureName)
+            }
+        }
+
     private fun registerBlockModel(blockIdentifier: Identifier, modelIdentifier: Identifier, textures: JTexturesContext.() -> Unit) =
         RESOURCE_PACK.addModel(blockIdentifier) {
             parent(modelIdentifier)
             textures(textures)
+        }
+
+    private fun registerBlockItem(blockIdentifier: Identifier, itemIdentifier: Identifier) =
+        RESOURCE_PACK.addModel(itemIdentifier) {
+            parent(blockIdentifier)
         }
 
     /**
@@ -103,6 +164,31 @@ class ArrpGeneration : RRPPreGenEntrypoint {
             addMultipart {
                 addModel(identifier) { y(270) }
                 whenCondition("facing", "west")
+            }
+        }
+
+    private fun registerTableBlockstates(identifier: Identifier, surfaceIdentifier: Identifier, legIdentifier: Identifier) =
+        RESOURCE_PACK.addBlockState(identifier) {
+            addMultipartModel(surfaceIdentifier)
+
+            addMultipart {
+                addModel(legIdentifier)
+                whenCondition("north_west", "true")
+            }
+
+            addMultipart {
+                addModel(legIdentifier) { y(90) }
+                whenCondition("north_east", "true")
+            }
+
+            addMultipart {
+                addModel(legIdentifier) { y(180) }
+                whenCondition("south_east", "true")
+            }
+
+            addMultipart {
+                addModel(legIdentifier) { y(270) }
+                whenCondition("south_west", "true")
             }
         }
 
