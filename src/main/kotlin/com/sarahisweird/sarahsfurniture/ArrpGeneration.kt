@@ -34,9 +34,9 @@ class ArrpGeneration : RRPPreGenEntrypoint {
 
             val blockIdentifier = Identifier(SarahsFurniture.MOD_ID, variantBlockName)
             val itemIdentifier = Identifier(SarahsFurniture.MOD_ID, "item/$variantBlockName")
-            val modelIdentifier = Identifier(SarahsFurniture.MOD_ID, "block/$variantBlockName")
+            val parentModelIdentifier = Identifier(SarahsFurniture.MOD_ID, "block/$blockName")
 
-            registerBlockModel(blockIdentifier, modelIdentifier) { textures.invoke(this, variant) }
+            registerBlockModel(blockIdentifier, parentModelIdentifier) { textures.invoke(this, variant) }
             registerBlockItemRotationFix(blockIdentifier, itemIdentifier)
             registerHorizontalFurnitureBlockstates(blockIdentifier)
         }
