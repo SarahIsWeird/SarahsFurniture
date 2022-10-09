@@ -1,4 +1,4 @@
-package com.sarahisweird.sarahsfurniture.util.arrp
+package com.sarahisweird.sarahsfurniture.util.arrp.blockstate
 
 import net.devtech.arrp.json.blockstate.JWhen
 import net.minecraft.state.property.Property

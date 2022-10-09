@@ -21,4 +21,25 @@ object VariantUtil {
     )
 
     val WOOLS = COLORS.map(::WoolVariant)
+
+    val TRANSLATIONS = mapOf(
+        "en_us" to listOf(
+            "White",
+            "Orange",
+            "Magenta",
+            "Light Blue",
+            "Yellow",
+            "Lime",
+            "Pink",
+            "Gray",
+            "Light Gray",
+            "Cyan",
+            "Purple",
+            "Blue",
+            "Brown",
+            "Green",
+            "Red",
+            "Black"
+        )
+    )
 }

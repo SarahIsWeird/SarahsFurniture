@@ -1,4 +1,4 @@
-package com.sarahisweird.sarahsfurniture.util.arrp
+package com.sarahisweird.sarahsfurniture.util.arrp.model
 
 import net.devtech.arrp.json.models.JElement
 import net.minecraft.util.math.Direction.Axis

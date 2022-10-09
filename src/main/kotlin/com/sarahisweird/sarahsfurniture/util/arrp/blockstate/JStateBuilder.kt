@@ -1,4 +1,4 @@
-package com.sarahisweird.sarahsfurniture.util.arrp
+package com.sarahisweird.sarahsfurniture.util.arrp.blockstate
 
 import net.devtech.arrp.json.blockstate.JMultipart
 import net.devtech.arrp.json.blockstate.JState

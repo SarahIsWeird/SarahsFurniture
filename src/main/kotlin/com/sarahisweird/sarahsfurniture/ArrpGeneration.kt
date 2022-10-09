@@ -1,8 +1,11 @@
 package com.sarahisweird.sarahsfurniture
 
-import com.sarahisweird.sarahsfurniture.util.arrp.JTexturesContext
+import com.sarahisweird.sarahsfurniture.SarahsFurniture.MOD_ID
 import com.sarahisweird.sarahsfurniture.util.arrp.addBlockState
+import com.sarahisweird.sarahsfurniture.util.arrp.addLang
 import com.sarahisweird.sarahsfurniture.util.arrp.addModel
+import com.sarahisweird.sarahsfurniture.util.arrp.model.JTexturesContext
+import com.sarahisweird.sarahsfurniture.util.toIdentifier
 import com.sarahisweird.sarahsfurniture.util.variants.Variant
 import com.sarahisweird.sarahsfurniture.util.variants.VariantUtil
 import net.devtech.arrp.api.RRPPreGenEntrypoint
@@ -11,15 +14,24 @@ import net.minecraft.util.Identifier
 
 class ArrpGeneration : RRPPreGenEntrypoint {
     companion object {
-        val RESOURCE_PACK: RuntimeResourcePack = RuntimeResourcePack.create(SarahsFurniture.MOD_ID)
+        val RESOURCE_PACK: RuntimeResourcePack = RuntimeResourcePack.create(MOD_ID)
     }
 
     override fun pregen() {
-        register()
+        registerBlocks()
+        registerLangEntries()
     }
 
-    private fun register() {
+    private fun registerBlocks() {
         VariantUtil.WOOLS.registerHorizontalFurnitureSingleTexture("armchair")
+    }
+
+    private fun registerLangEntries() {
+        RESOURCE_PACK.addLang("en_us".toIdentifier(MOD_ID)) {
+            VariantUtil.COLORS.zip(VariantUtil.TRANSLATIONS["en_us"]!!).forEach { (name, displayName) ->
+                block(Identifier(MOD_ID, "${name}_armchair"), "$displayName Armchair")
+            }
+        }
     }
 
     private fun List<Variant>.registerHorizontalFurnitureSingleTexture(blockName: String) =
@@ -32,9 +44,9 @@ class ArrpGeneration : RRPPreGenEntrypoint {
         forEach { variant ->
             val variantBlockName = "${variant.name}_${blockName}"
 
-            val blockIdentifier = Identifier(SarahsFurniture.MOD_ID, variantBlockName)
-            val itemIdentifier = Identifier(SarahsFurniture.MOD_ID, "item/$variantBlockName")
-            val parentModelIdentifier = Identifier(SarahsFurniture.MOD_ID, "block/$blockName")
+            val blockIdentifier = Identifier(MOD_ID, variantBlockName)
+            val itemIdentifier = Identifier(MOD_ID, "item/$variantBlockName")
+            val parentModelIdentifier = Identifier(MOD_ID, "block/$blockName")
 
             registerBlockModel(blockIdentifier, parentModelIdentifier) { textures.invoke(this, variant) }
             registerBlockItemRotationFix(blockIdentifier, itemIdentifier)
