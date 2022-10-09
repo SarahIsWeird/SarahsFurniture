@@ -3,31 +3,11 @@ package com.sarahisweird.sarahsfurniture.blocks
 import com.sarahisweird.sarahsfurniture.util.voxelShape
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.block.*
-import net.minecraft.item.ItemPlacementContext
-import net.minecraft.sound.BlockSoundGroup
-import net.minecraft.state.StateManager
-import net.minecraft.state.property.DirectionProperty
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 
-class ArmchairBlock : Block(FabricBlockSettings.of(Material.WOOL).strength(0.8f).sounds(BlockSoundGroup.WOOL)) {
-    companion object {
-        val FACING: DirectionProperty = HorizontalFacingBlock.FACING
-    }
-
-    init {
-        defaultState = stateManager.defaultState.with(FACING, Direction.NORTH)
-    }
-
-    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        builder.add(FACING)
-    }
-
-    override fun getPlacementState(ctx: ItemPlacementContext): BlockState =
-        defaultState.with(FACING, ctx.playerFacing.opposite)
-
+class ArmchairBlock : HorizontalFurnitureBlock(FabricBlockSettings.of(Material.WOOL)) {
     @Suppress("OVERRIDE_DEPRECATION")
     override fun getOutlineShape(state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext): VoxelShape =
         voxelShape {
