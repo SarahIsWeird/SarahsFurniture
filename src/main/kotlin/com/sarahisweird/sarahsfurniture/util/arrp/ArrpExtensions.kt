@@ -8,6 +8,8 @@ import com.sarahisweird.sarahsfurniture.util.arrp.loot.JLootTableContext
 import com.sarahisweird.sarahsfurniture.util.arrp.loot.arrpLootTable
 import com.sarahisweird.sarahsfurniture.util.arrp.model.JModelContext
 import com.sarahisweird.sarahsfurniture.util.arrp.model.arrpModel
+import com.sarahisweird.sarahsfurniture.util.arrp.tags.JTagContext
+import com.sarahisweird.sarahsfurniture.util.arrp.tags.arrpTag
 import net.devtech.arrp.api.RuntimeResourcePack
 import net.minecraft.util.Identifier
 
@@ -22,3 +24,6 @@ fun RuntimeResourcePack.addLang(identifier: Identifier, builder: JLangContext.()
 
 fun RuntimeResourcePack.addLootTable(identifier: Identifier, type: String, builder: JLootTableContext.() -> Unit): ByteArray =
     addLootTable(identifier, arrpLootTable(type, builder))
+
+fun RuntimeResourcePack.addTag(identifier: Identifier, builder: JTagContext.() -> Unit): ByteArray =
+    addTag(identifier, arrpTag(builder))

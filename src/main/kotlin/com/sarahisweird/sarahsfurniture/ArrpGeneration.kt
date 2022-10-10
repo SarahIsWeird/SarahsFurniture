@@ -1,10 +1,7 @@
 package com.sarahisweird.sarahsfurniture
 
 import com.sarahisweird.sarahsfurniture.SarahsFurniture.MOD_ID
-import com.sarahisweird.sarahsfurniture.util.arrp.addBlockState
-import com.sarahisweird.sarahsfurniture.util.arrp.addLang
-import com.sarahisweird.sarahsfurniture.util.arrp.addLootTable
-import com.sarahisweird.sarahsfurniture.util.arrp.addModel
+import com.sarahisweird.sarahsfurniture.util.arrp.*
 import com.sarahisweird.sarahsfurniture.util.arrp.model.JTexturesContext
 import com.sarahisweird.sarahsfurniture.util.toIdentifier
 import com.sarahisweird.sarahsfurniture.util.variants.Variant
@@ -24,6 +21,7 @@ class ArrpGeneration : RRPPreGenEntrypoint {
         registerBlocks()
         registerLangEntries()
         registerLootTables()
+        registerTags()
     }
 
     private fun registerBlocks() {
@@ -80,6 +78,20 @@ class ArrpGeneration : RRPPreGenEntrypoint {
 
         for (log in VariantUtil.WOOD_LOGS) {
             VariantUtil.WOOD_PLANKS.registerDefaultLootTables("${log.name}_dining_table")
+        }
+    }
+
+    private fun registerTags() {
+        RESOURCE_PACK.addTag(Identifier("minecraft", "blocks/mineable/axe")) {
+            val diningTableId = Identifier(MOD_ID, "dining_table")
+
+            for (log in VariantUtil.WOOD_LOGS) {
+                val logId = diningTableId.withPathPrefix("${log.name}_")
+
+                for (planks in VariantUtil.WOOD_PLANKS) {
+                    add(logId.withPathPrefix("${planks.name}_"))
+                }
+            }
         }
     }
 
