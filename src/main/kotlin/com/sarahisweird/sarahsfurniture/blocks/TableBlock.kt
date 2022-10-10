@@ -5,6 +5,10 @@ import net.minecraft.block.BlockState
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.BooleanProperty
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
+import net.minecraft.world.BlockView
+import net.minecraft.world.WorldAccess
 
 open class TableBlock protected constructor(settings: Settings) : Block(settings) {
     companion object {
@@ -27,14 +31,23 @@ open class TableBlock protected constructor(settings: Settings) : Block(settings
     }
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState {
-        val northBlock = ctx.world.getBlockState(ctx.blockPos.north()).block.translationKey
-        val southBlock = ctx.world.getBlockState(ctx.blockPos.south()).block.translationKey
-        val eastBlock = ctx.world.getBlockState(ctx.blockPos.east()).block.translationKey
-        val westBlock = ctx.world.getBlockState(ctx.blockPos.west()).block.translationKey
-        val northEastBlock = ctx.world.getBlockState(ctx.blockPos.north().east()).block.translationKey
-        val northWestBlock = ctx.world.getBlockState(ctx.blockPos.north().west()).block.translationKey
-        val southEastBlock = ctx.world.getBlockState(ctx.blockPos.south().east()).block.translationKey
-        val southWestBlock = ctx.world.getBlockState(ctx.blockPos.south().west()).block.translationKey
+        return getBlockStateForNeighbors(ctx.world, ctx.blockPos)
+    }
+
+    @Suppress("OVERRIDE_DEPRECATION")
+    override fun getStateForNeighborUpdate(state: BlockState, direction: Direction, neighborState: BlockState, world: WorldAccess, pos: BlockPos, neighborPos: BlockPos): BlockState {
+        return getBlockStateForNeighbors(world, pos)
+    }
+
+    private fun getBlockStateForNeighbors(world: BlockView, blockPos: BlockPos): BlockState {
+        val northBlock = world.getBlockState(blockPos.north()).block.translationKey
+        val southBlock = world.getBlockState(blockPos.south()).block.translationKey
+        val eastBlock = world.getBlockState(blockPos.east()).block.translationKey
+        val westBlock = world.getBlockState(blockPos.west()).block.translationKey
+        val northEastBlock = world.getBlockState(blockPos.north().east()).block.translationKey
+        val northWestBlock = world.getBlockState(blockPos.north().west()).block.translationKey
+        val southEastBlock = world.getBlockState(blockPos.south().east()).block.translationKey
+        val southWestBlock = world.getBlockState(blockPos.south().west()).block.translationKey
 
         val hasNorthBlock = northBlock == translationKey
         val hasSouthBlock = southBlock == translationKey
