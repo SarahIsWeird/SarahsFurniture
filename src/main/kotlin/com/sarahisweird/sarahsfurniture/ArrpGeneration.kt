@@ -79,7 +79,7 @@ class ArrpGeneration : RRPPreGenEntrypoint {
         VariantUtil.WOOLS.registerDefaultLootTables("armchair")
 
         for (log in VariantUtil.WOOD_LOGS) {
-            VariantUtil.WOOD_PLANKS.registerDefaultLootTables("${log.name}_dining_chair")
+            VariantUtil.WOOD_PLANKS.registerDefaultLootTables("${log.name}_dining_table")
         }
     }
 
