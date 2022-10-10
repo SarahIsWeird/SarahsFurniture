@@ -1,8 +1,12 @@
 package com.sarahisweird.sarahsfurniture.util
 
+import com.sarahisweird.sarahsfurniture.SarahsFurniture
 import net.minecraft.util.Identifier
 
-fun String.toIdentifier(namespace: String) =
+fun String.toId(namespace: String = SarahsFurniture.MOD_ID) =
+    toIdentifier(namespace)
+
+fun String.toIdentifier(namespace: String = SarahsFurniture.MOD_ID) =
     Identifier(namespace, this)
 
 fun Identifier.withPathPrefix(prefix: String) =

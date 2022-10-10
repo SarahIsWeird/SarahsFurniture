@@ -4,7 +4,7 @@ import com.sarahisweird.sarahsfurniture.SarahsFurniture.MOD_ID
 import com.sarahisweird.sarahsfurniture.util.arrp.*
 import com.sarahisweird.sarahsfurniture.util.arrp.model.JTexturesContext
 import com.sarahisweird.sarahsfurniture.util.arrp.tags.JTagContext
-import com.sarahisweird.sarahsfurniture.util.toIdentifier
+import com.sarahisweird.sarahsfurniture.util.toId
 import com.sarahisweird.sarahsfurniture.util.variants.Variant
 import com.sarahisweird.sarahsfurniture.util.variants.VariantUtil
 import com.sarahisweird.sarahsfurniture.util.withPathPrefix
@@ -32,7 +32,7 @@ class ArrpGeneration : RRPPreGenEntrypoint {
         VariantUtil.WOOD_LOGS.registerTableLegs("dining_table")
         VariantUtil.WOOD_PLANKS.registerTableSurfaces("dining_table")
 
-        val diningTableIdentifier = Identifier(MOD_ID, "dining_table")
+        val diningTableIdentifier = "dining_table".toId()
         val diningTableSurfaceIdentifier = diningTableIdentifier.withPathSuffix("_surface")
         val diningTableLegIdentifier = diningTableIdentifier.withPathSuffix("_leg")
 
@@ -45,7 +45,7 @@ class ArrpGeneration : RRPPreGenEntrypoint {
                 registerTableBlockstates(blockVariant, surfaceVariant, legVariant)
 
                 RESOURCE_PACK.addModel(blockVariant.withPathPrefix("item/")) {
-                    parent(Identifier(MOD_ID, "item/dining_table_item"))
+                    parent("item/dining_table_item".toId())
 
                     textures {
                         variable("surface", planks.textureName)
@@ -58,12 +58,12 @@ class ArrpGeneration : RRPPreGenEntrypoint {
     }
 
     private fun registerLangEntries() {
-        RESOURCE_PACK.addLang("en_us".toIdentifier(MOD_ID)) {
+        RESOURCE_PACK.addLang("en_us".toId()) {
             VariantUtil.COLORS.zip(VariantUtil.COLOR_TRANSLATIONS["en_us"]!!).forEach { (name, displayName) ->
-                block(Identifier(MOD_ID, "${name}_armchair"), "$displayName Armchair")
+                block("${name}_armchair".toId(), "$displayName Armchair")
             }
 
-            val diningTableIdentifier = Identifier(MOD_ID, "dining_table")
+            val diningTableIdentifier = "dining_table".toId()
 
             VariantUtil.WOOD_PLANKS.zip(VariantUtil.WOOD_TRANSLATIONS["en_us"]!!).forEach { (planks, displayName) ->
                 for (log in VariantUtil.WOOD_LOGS) {
@@ -84,16 +84,16 @@ class ArrpGeneration : RRPPreGenEntrypoint {
     }
 
     private fun registerTags() {
-        RESOURCE_PACK.addTag(Identifier("minecraft", "blocks/mineable/axe")) {
-            addAll(Identifier(MOD_ID, "dining_table"), VariantUtil.WOOD_LOGS, VariantUtil.WOOD_PLANKS)
+        RESOURCE_PACK.addTag("blocks/mineable/axe".toId("minecraft")) {
+            addAll("dining_table".toId(), VariantUtil.WOOD_LOGS, VariantUtil.WOOD_PLANKS)
         }
 
-        RESOURCE_PACK.addTag(Identifier(MOD_ID, "blocks/armchairs")) {
-            addAll(Identifier(MOD_ID, "armchair"), VariantUtil.WOOLS)
+        RESOURCE_PACK.addTag("blocks/armchairs".toId()) {
+            addAll("armchair".toId(), VariantUtil.WOOLS)
         }
 
-        RESOURCE_PACK.addTag(Identifier(MOD_ID, "blocks/dining_tables")) {
-            addAll(Identifier(MOD_ID, "dining_table"), VariantUtil.WOOD_LOGS, VariantUtil.WOOD_PLANKS)
+        RESOURCE_PACK.addTag("blocks/dining_tables".toId()) {
+            addAll("dining_table".toId(), VariantUtil.WOOD_LOGS, VariantUtil.WOOD_PLANKS)
         }
     }
 
@@ -115,8 +115,8 @@ class ArrpGeneration : RRPPreGenEntrypoint {
 
     private fun registerRecipes() {
         VariantUtil.WOOLS.forEach { variant ->
-            val woolId = Identifier("minecraft", "${variant.name}_wool")
-            val armchairId = Identifier(MOD_ID, "${variant.name}_armchair")
+            val woolId = "${variant.name}_wool".toId("minecraft")
+            val armchairId = "${variant.name}_armchair".toId()
 
             RESOURCE_PACK.addShapedRecipe(armchairId) {
                 pattern(
@@ -131,11 +131,11 @@ class ArrpGeneration : RRPPreGenEntrypoint {
         }
 
         for (log in VariantUtil.WOOD_LOGS) {
-            val logId = Identifier("minecraft", "${log.name}_${log.suffix}")
+            val logId = "${log.name}_${log.suffix}".toId("minecraft")
 
             for (planks in VariantUtil.WOOD_PLANKS) {
-                val planksSlabId = Identifier("minecraft", "${planks.name}_slab")
-                val tableId = Identifier(MOD_ID, "${planks.name}_${log.name}_dining_table")
+                val planksSlabId ="${planks.name}_slab".toId("minecraft")
+                val tableId = "${planks.name}_${log.name}_dining_table".toId()
 
                 RESOURCE_PACK.addShapedRecipe(tableId) {
                     pattern(
@@ -162,9 +162,9 @@ class ArrpGeneration : RRPPreGenEntrypoint {
         forEach { variant ->
             val variantBlockName = "${variant.name}_${blockName}"
 
-            val blockIdentifier = Identifier(MOD_ID, variantBlockName)
-            val itemIdentifier = Identifier(MOD_ID, "item/$variantBlockName")
-            val parentModelIdentifier = Identifier(MOD_ID, "block/$blockName")
+            val blockIdentifier = variantBlockName.toId()
+            val itemIdentifier = "item/$variantBlockName".toId()
+            val parentModelIdentifier = "block/$blockName".toId()
 
             registerBlockModel(blockIdentifier, parentModelIdentifier) { textures.invoke(this, variant) }
             registerBlockItemRotationFix(blockIdentifier, itemIdentifier)
@@ -173,7 +173,7 @@ class ArrpGeneration : RRPPreGenEntrypoint {
 
     private fun List<Variant>.registerTableLegs(blockName: String) =
         forEach { variant ->
-            val parentIdentifier = Identifier(MOD_ID, "${blockName}_leg")
+            val parentIdentifier = "${blockName}_leg".toId()
             val modelIdentifier = parentIdentifier.withPathPrefix("${variant.name}_")
 
             registerBlockModel(modelIdentifier, parentIdentifier.withPathPrefix("block/")) {
@@ -184,7 +184,7 @@ class ArrpGeneration : RRPPreGenEntrypoint {
 
     private fun List<Variant>.registerTableSurfaces(blockName: String) =
         forEach { variant ->
-            val parentIdentifier = Identifier(MOD_ID, "${blockName}_surface")
+            val parentIdentifier = "${blockName}_surface".toId()
             val modelIdentifier = parentIdentifier.withPathPrefix("${variant.name}_")
 
             registerBlockModel(modelIdentifier, parentIdentifier.withPathPrefix("block/")) {
@@ -267,7 +267,7 @@ class ArrpGeneration : RRPPreGenEntrypoint {
 
     private fun List<Variant>.registerDefaultLootTables(blockName: String) =
         forEach { variant ->
-            RESOURCE_PACK.addLootTable(Identifier(MOD_ID, "blocks/${variant.name}_$blockName"), "minecraft:block") {
+            RESOURCE_PACK.addLootTable("blocks/${variant.name}_$blockName".toId(), "minecraft:block") {
                 pool {
                     rolls(1)
 

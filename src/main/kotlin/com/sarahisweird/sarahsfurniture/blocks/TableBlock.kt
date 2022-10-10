@@ -5,12 +5,13 @@ import net.minecraft.block.BlockState
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.BooleanProperty
+import net.minecraft.tag.TagKey
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
 
-open class TableBlock protected constructor(settings: Settings) : Block(settings) {
+open class TableBlock protected constructor(settings: Settings, private val tableTag: TagKey<Block>) : Block(settings) {
     companion object {
         val NORTH_EAST: BooleanProperty = BooleanProperty.of("north_east")
         val NORTH_WEST: BooleanProperty = BooleanProperty.of("north_west")
@@ -40,23 +41,14 @@ open class TableBlock protected constructor(settings: Settings) : Block(settings
     }
 
     private fun getBlockStateForNeighbors(world: BlockView, blockPos: BlockPos): BlockState {
-        val northBlock = world.getBlockState(blockPos.north()).block.translationKey
-        val southBlock = world.getBlockState(blockPos.south()).block.translationKey
-        val eastBlock = world.getBlockState(blockPos.east()).block.translationKey
-        val westBlock = world.getBlockState(blockPos.west()).block.translationKey
-        val northEastBlock = world.getBlockState(blockPos.north().east()).block.translationKey
-        val northWestBlock = world.getBlockState(blockPos.north().west()).block.translationKey
-        val southEastBlock = world.getBlockState(blockPos.south().east()).block.translationKey
-        val southWestBlock = world.getBlockState(blockPos.south().west()).block.translationKey
-
-        val hasNorthBlock = northBlock == translationKey
-        val hasSouthBlock = southBlock == translationKey
-        val hasEastBlock = eastBlock == translationKey
-        val hasWestBlock = westBlock == translationKey
-        val hasNorthEastBlock = northEastBlock == translationKey
-        val hasNorthWestBlock = northWestBlock == translationKey
-        val hasSouthEastBlock = southEastBlock == translationKey
-        val hasSouthWestBlock = southWestBlock == translationKey
+        val hasNorthBlock = world.getBlockState(blockPos.north()).isIn(tableTag)
+        val hasSouthBlock = world.getBlockState(blockPos.south()).isIn(tableTag)
+        val hasEastBlock = world.getBlockState(blockPos.east()).isIn(tableTag)
+        val hasWestBlock = world.getBlockState(blockPos.west()).isIn(tableTag)
+        val hasNorthEastBlock = world.getBlockState(blockPos.north().east()).isIn(tableTag)
+        val hasNorthWestBlock = world.getBlockState(blockPos.north().west()).isIn(tableTag)
+        val hasSouthEastBlock = world.getBlockState(blockPos.south().east()).isIn(tableTag)
+        val hasSouthWestBlock = world.getBlockState(blockPos.south().west()).isIn(tableTag)
 
         return defaultState
             .with(NORTH_EAST, hasLeg(hasNorthBlock, hasEastBlock, hasNorthEastBlock))
