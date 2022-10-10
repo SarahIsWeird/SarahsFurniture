@@ -24,6 +24,9 @@
         ],
         "rrp:pregen": [
             "com.sarahisweird.sarahsfurniture.ArrpGeneration"
+        ],
+        "condensed_creative": [
+            "com.sarahisweird.sarahsfurniture.CondensedCreativeInit"
         ]
     },
     "depends": {

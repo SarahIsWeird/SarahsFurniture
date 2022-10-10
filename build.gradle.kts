@@ -18,15 +18,22 @@ group = mavenGroup
 repositories {
     maven("https://maven.wispforest.io")
     maven("https://storage.googleapis.com/devan-maven/")
+    maven("https://maven.shedaniel.me")
 }
 
 dependencies {
     val minecraftVersion: String by project
     val yarnMappings: String by project
+
     val loaderVersion: String by project
     val fabricVersion: String by project
     val fabricKotlinVersion: String by project
+
+    val clothConfigVersion: String by project
+
     val owoVersion: String by project
+    val condensedCreativeVersion: String by project
+
     val arrpVersion: String by project
 
     minecraft("com.mojang", "minecraft", minecraftVersion)
@@ -36,7 +43,14 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api", "fabric-api", fabricVersion)
     modImplementation("net.fabricmc", "fabric-language-kotlin", fabricKotlinVersion)
 
+    // Needed for Condensed Creative
+    modApi("me.shedaniel.cloth", "cloth-config-fabric", clothConfigVersion) {
+        exclude(group = "net.fabricmc.fabric-api")
+    }
+
     modImplementation("io.wispforest", "owo-lib", owoVersion)
+    modImplementation("io.wispforest", "condensed_creative-fabric", condensedCreativeVersion)
+
     modImplementation("net.devtech", "arrp", arrpVersion)
 }
 

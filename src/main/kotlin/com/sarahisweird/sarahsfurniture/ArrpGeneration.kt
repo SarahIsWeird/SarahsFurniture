@@ -3,6 +3,7 @@ package com.sarahisweird.sarahsfurniture
 import com.sarahisweird.sarahsfurniture.SarahsFurniture.MOD_ID
 import com.sarahisweird.sarahsfurniture.util.arrp.*
 import com.sarahisweird.sarahsfurniture.util.arrp.model.JTexturesContext
+import com.sarahisweird.sarahsfurniture.util.arrp.tags.JTagContext
 import com.sarahisweird.sarahsfurniture.util.toIdentifier
 import com.sarahisweird.sarahsfurniture.util.variants.Variant
 import com.sarahisweird.sarahsfurniture.util.variants.VariantUtil
@@ -84,14 +85,21 @@ class ArrpGeneration : RRPPreGenEntrypoint {
 
     private fun registerTags() {
         RESOURCE_PACK.addTag(Identifier("minecraft", "blocks/mineable/axe")) {
-            val diningTableId = Identifier(MOD_ID, "dining_table")
+            addAll(Identifier(MOD_ID, "dining_table"), VariantUtil.WOOD_LOGS, VariantUtil.WOOD_PLANKS)
 
-            for (log in VariantUtil.WOOD_LOGS) {
-                val logId = diningTableId.withPathPrefix("${log.name}_")
+        }
 
-                for (planks in VariantUtil.WOOD_PLANKS) {
-                    add(logId.withPathPrefix("${planks.name}_"))
-                }
+        RESOURCE_PACK.addTag(Identifier(MOD_ID, "blocks/dining_tables")) {
+            addAll(Identifier(MOD_ID, "dining_table"), VariantUtil.WOOD_LOGS, VariantUtil.WOOD_PLANKS)
+        }
+    }
+
+    private fun JTagContext.addAll(baseId: Identifier, outerVariants: List<Variant>, innerVariants: List<Variant>) {
+        for (outer in outerVariants) {
+            val variant1Id = baseId.withPathPrefix("${outer.name}_")
+
+            for (inner in innerVariants) {
+                add(variant1Id.withPathPrefix("${inner.name}_"))
             }
         }
     }

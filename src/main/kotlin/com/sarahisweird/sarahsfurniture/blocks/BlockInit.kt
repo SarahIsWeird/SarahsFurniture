@@ -27,7 +27,7 @@ class BlockInit : BlockRegistryContainer {
             val blockIdentifier = Identifier(SarahsFurniture.MOD_ID, "${VariantUtil.COLORS[i]}_armchair")
 
             Registry.register(Registry.BLOCK, blockIdentifier, chair)
-            Registry.register(Registry.ITEM, blockIdentifier, BlockItem(chair, FabricItemSettings().group(SarahsFurniture.ITEM_GROUP)))
+            Registry.register(Registry.ITEM, blockIdentifier, BlockItem(chair, FabricItemSettings()))
         }
 
         VariantUtil.WOOD_PLANKS.forEachIndexed { plankI, plank ->
@@ -36,7 +36,7 @@ class BlockInit : BlockRegistryContainer {
                 val table = DINING_TABLES[plankI * VariantUtil.WOOD_LOGS.size + logI]
 
                 Registry.register(Registry.BLOCK, identifier, table)
-                Registry.register(Registry.ITEM, identifier, BlockItem(table, FabricItemSettings().group(SarahsFurniture.ITEM_GROUP)))
+                Registry.register(Registry.ITEM, identifier, BlockItem(table, FabricItemSettings()))
             }
         }
     }
