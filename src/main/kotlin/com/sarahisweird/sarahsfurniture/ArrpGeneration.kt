@@ -86,11 +86,20 @@ class ArrpGeneration : RRPPreGenEntrypoint {
     private fun registerTags() {
         RESOURCE_PACK.addTag(Identifier("minecraft", "blocks/mineable/axe")) {
             addAll(Identifier(MOD_ID, "dining_table"), VariantUtil.WOOD_LOGS, VariantUtil.WOOD_PLANKS)
+        }
 
+        RESOURCE_PACK.addTag(Identifier(MOD_ID, "blocks/armchairs")) {
+            addAll(Identifier(MOD_ID, "armchair"), VariantUtil.WOOLS)
         }
 
         RESOURCE_PACK.addTag(Identifier(MOD_ID, "blocks/dining_tables")) {
             addAll(Identifier(MOD_ID, "dining_table"), VariantUtil.WOOD_LOGS, VariantUtil.WOOD_PLANKS)
+        }
+    }
+
+    private fun JTagContext.addAll(baseId: Identifier, variants: List<Variant>) {
+        for (variant in variants) {
+            add(baseId.withPathPrefix("${variant.name}_"))
         }
     }
 
