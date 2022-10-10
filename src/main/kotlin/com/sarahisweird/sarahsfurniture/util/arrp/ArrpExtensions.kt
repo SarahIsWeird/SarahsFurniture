@@ -8,6 +8,8 @@ import com.sarahisweird.sarahsfurniture.util.arrp.loot.JLootTableContext
 import com.sarahisweird.sarahsfurniture.util.arrp.loot.arrpLootTable
 import com.sarahisweird.sarahsfurniture.util.arrp.model.JModelContext
 import com.sarahisweird.sarahsfurniture.util.arrp.model.arrpModel
+import com.sarahisweird.sarahsfurniture.util.arrp.recipe.JShapedRecipeContext
+import com.sarahisweird.sarahsfurniture.util.arrp.recipe.arrpShapedRecipe
 import com.sarahisweird.sarahsfurniture.util.arrp.tags.JTagContext
 import com.sarahisweird.sarahsfurniture.util.arrp.tags.arrpTag
 import net.devtech.arrp.api.RuntimeResourcePack
@@ -27,3 +29,6 @@ fun RuntimeResourcePack.addLootTable(identifier: Identifier, type: String, build
 
 fun RuntimeResourcePack.addTag(identifier: Identifier, builder: JTagContext.() -> Unit): ByteArray =
     addTag(identifier, arrpTag(builder))
+
+fun RuntimeResourcePack.addShapedRecipe(identifier: Identifier, builder: JShapedRecipeContext.() -> Unit): ByteArray =
+    addRecipe(identifier, arrpShapedRecipe(builder))

@@ -22,6 +22,7 @@ class ArrpGeneration : RRPPreGenEntrypoint {
         registerLangEntries()
         registerLootTables()
         registerTags()
+        registerRecipes()
     }
 
     private fun registerBlocks() {
@@ -90,6 +91,45 @@ class ArrpGeneration : RRPPreGenEntrypoint {
 
                 for (planks in VariantUtil.WOOD_PLANKS) {
                     add(logId.withPathPrefix("${planks.name}_"))
+                }
+            }
+        }
+    }
+
+    private fun registerRecipes() {
+        VariantUtil.WOOLS.forEach { variant ->
+            val woolId = Identifier("minecraft", "${variant.name}_wool")
+            val armchairId = Identifier(MOD_ID, "${variant.name}_armchair")
+
+            RESOURCE_PACK.addShapedRecipe(armchairId) {
+                pattern(
+                    " W ",
+                    "WWW",
+                    "WWW"
+                )
+
+                key("W", woolId)
+                result(armchairId)
+            }
+        }
+
+        for (log in VariantUtil.WOOD_LOGS) {
+            val logId = Identifier("minecraft", "${log.name}_${log.suffix}")
+
+            for (planks in VariantUtil.WOOD_PLANKS) {
+                val planksSlabId = Identifier("minecraft", "${planks.name}_slab")
+                val tableId = Identifier(MOD_ID, "${planks.name}_${log.name}_dining_table")
+
+                RESOURCE_PACK.addShapedRecipe(tableId) {
+                    pattern(
+                        "SSS",
+                        "L L",
+                        "L L"
+                    )
+
+                    key("S", planksSlabId)
+                    key("L", logId)
+                    result(tableId, 4)
                 }
             }
         }
