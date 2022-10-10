@@ -43,7 +43,16 @@ class ArrpGeneration : RRPPreGenEntrypoint {
                 val legVariant = diningTableLegIdentifier.withPathPrefix("${log.name}_")
 
                 registerTableBlockstates(blockVariant, surfaceVariant, legVariant)
-                registerBlockItem(blockVariant, blockVariant.withPathPrefix("item/"))
+
+                RESOURCE_PACK.addModel(blockVariant.withPathPrefix("item/")) {
+                    parent(Identifier(MOD_ID, "item/dining_table_item"))
+
+                    textures {
+                        variable("surface", planks.textureName)
+                        variable("leg", log.textureName)
+                        particle(planks.textureName)
+                    }
+                }
             }
         }
     }
@@ -119,11 +128,6 @@ class ArrpGeneration : RRPPreGenEntrypoint {
         RESOURCE_PACK.addModel(blockIdentifier) {
             parent(modelIdentifier)
             textures(textures)
-        }
-
-    private fun registerBlockItem(blockIdentifier: Identifier, itemIdentifier: Identifier) =
-        RESOURCE_PACK.addModel(itemIdentifier) {
-            parent(blockIdentifier)
         }
 
     /**

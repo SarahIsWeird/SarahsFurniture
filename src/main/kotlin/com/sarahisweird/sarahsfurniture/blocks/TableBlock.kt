@@ -16,10 +16,10 @@ open class TableBlock protected constructor(settings: Settings) : Block(settings
 
     init {
         defaultState = stateManager.defaultState
-            .with(NORTH_EAST, false)
-            .with(NORTH_WEST, false)
-            .with(SOUTH_EAST, false)
-            .with(SOUTH_WEST, false)
+            .with(NORTH_EAST, true)
+            .with(NORTH_WEST, true)
+            .with(SOUTH_EAST, true)
+            .with(SOUTH_WEST, true)
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {

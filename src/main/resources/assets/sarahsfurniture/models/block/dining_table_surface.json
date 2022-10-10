@@ -3,19 +3,20 @@
 	"parent": "block/block",
 	"textures": {
 		"particle": "block/oak_planks",
-		"#surface": "block/oak_planks"
+		"surface": "block/oak_planks"
 	},
 	"elements": [
 		{
+			"name": "surface",
 			"from": [0, 14, 0],
 			"to": [16, 16, 16],
 			"faces": {
-				"north": {"uv": [16, 0, 0, 2], "texture": "##surface"},
-				"east": {"uv": [14, 16, 16, 0], "rotation": 270, "texture": "##surface"},
-				"south": {"uv": [16, 14, 0, 16], "texture": "##surface"},
-				"west": {"uv": [0, 16, 2, 0], "rotation": 90, "texture": "##surface"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "##surface"},
-				"down": {"uv": [16, 16, 0, 0], "texture": "##surface"}
+				"north": {"uv": [16, 0, 0, 2], "texture": "#surface"},
+				"east": {"uv": [14, 16, 16, 0], "rotation": 270, "texture": "#surface"},
+				"south": {"uv": [16, 14, 0, 16], "texture": "#surface"},
+				"west": {"uv": [0, 16, 2, 0], "rotation": 90, "texture": "#surface"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#surface"},
+				"down": {"uv": [16, 16, 0, 0], "texture": "#surface"}
 			}
 		}
 	]
