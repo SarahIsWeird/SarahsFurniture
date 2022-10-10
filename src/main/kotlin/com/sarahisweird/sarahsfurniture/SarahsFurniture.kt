@@ -1,6 +1,6 @@
 package com.sarahisweird.sarahsfurniture
 
-import com.sarahisweird.sarahsfurniture.blocks.BlockInit
+import com.sarahisweird.sarahsfurniture.blocks.SFBlocks
 import com.sarahisweird.sarahsfurniture.util.variants.VariantUtil
 import io.wispforest.owo.registration.reflect.FieldRegistrationHandler
 import net.devtech.arrp.api.RRPCallback
@@ -14,11 +14,11 @@ object SarahsFurniture : ModInitializer {
     const val MOD_ID = "sarahsfurniture"
 
     val ITEM_GROUP: ItemGroup = FabricItemGroupBuilder.create(Identifier(MOD_ID, "items"))
-        .icon { ItemStack(BlockInit.ARMCHAIRS[VariantUtil.COLORS.indexOf("red")]) }
+        .icon { ItemStack(SFBlocks.ARMCHAIRS[VariantUtil.COLORS.indexOf("red")]) }
         .build()
 
     override fun onInitialize() {
-        FieldRegistrationHandler.register(BlockInit::class.java, MOD_ID, false)
+        FieldRegistrationHandler.register(SFBlocks::class.java, MOD_ID, false)
 
         RRPCallback.BEFORE_VANILLA.register { it.add(ArrpGeneration.RESOURCE_PACK) }
     }

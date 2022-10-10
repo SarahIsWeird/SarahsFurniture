@@ -10,7 +10,7 @@ import net.minecraft.item.BlockItem
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
-class BlockInit : BlockRegistryContainer {
+class SFBlocks : BlockRegistryContainer {
     companion object {
         @IterationIgnored
         val ARMCHAIRS = VariantUtil.WOOLS.map { ArmchairBlock() }
